@@ -1,3 +1,15 @@
+git-publish (1.4.3-1) unstable; urgency=low
+
+  * Add 's' menu command to select a subset of patches to send
+  * Use UTF-8 encoding for annotated tags
+  * Use a cover letter by default for pull requests
+  * Convert README.rst to git-publish.pod man page
+  * Add --no-sign-pull option to skip pull request signing
+  * Run cccmd in the top-level directory
+  * Show meaningful error message when run outside top-level directory
+
+ -- Philippe Mathieu-Daudé <f4bug@amsat.org>  Fri, 20 Apr 2018 23:22:52 -0300
+
 git-publish (1.4.2-1) unstable; urgency=low
 
   * Initial release. (Closes: #889847)
