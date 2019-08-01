@@ -19,6 +19,7 @@ import sys
 import optparse
 import re
 import tempfile
+import time
 import shutil
 import subprocess
 import locale
@@ -334,7 +335,7 @@ def tag_name_staging(topic):
 
 def tag_name_pull_request(topic):
     '''Build a pull request tag name from a topic name'''
-    return '%s-pull-request' % topic
+    return '%s-%s' % (topic, time.strftime('%Y%m%d'))
 
 def get_latest_tag_number(branch):
     '''Find the latest tag number or 0 if no tags exist'''
