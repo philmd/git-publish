@@ -107,6 +107,10 @@ cannot be applied properly, but they are still useful for code review.
 
 Select default settings from the given profile.
 
+=item B<--identity IDENTITY_NAME>
+
+Use the given (git) user identity
+
 =item B<--pull-request>
 
 Tag and send as a pull request.
