@@ -23,6 +23,7 @@ import time
 import shutil
 import subprocess
 import locale
+import mailbox
 from email import message_from_file, header
 
 VERSION = '1.5.0'
@@ -816,11 +817,31 @@ branch.%s.pushRemote is set appropriately?  (Override with --no-url-check)''' % 
             if options.annotate:
                 edit(*patches)
             if cc_cmd:
+                s_cc = set()
                 for x in patches:
                     output = subprocess.check_output(cc_cmd + " " + x,
                                 shell=True, cwd=git_get_toplevel_dir()).decode(ENCODING)
-                    cc = cc.union(output.splitlines())
-            cc.difference_update(to)
+                    p_cc = output.splitlines()
+                    if len(p_cc) == 0:
+                        continue
+                    s_cc = s_cc.union(p_cc)
+                    msg = mailbox.Message(open(x).read().encode(ENCODING))
+                    if 'Cc' in msg.keys():
+                        m_cc = msg.get('Cc').split(',')
+                        msg.replace_header('Cc', ','.join(set(m_cc).union(p_cc)))
+                    else:
+                        msg.add_header('Cc', ','.join(p_cc))
+                    open(x, 'w').write(msg.as_string().decode(ENCODING))
+                if message:
+                    x = os.path.join(tmpdir, '0000-cover-letter.patch')
+                    msg = mailbox.Message(open(x).read().encode(ENCODING))
+                    if 'Cc' in msg.keys():
+                        c_cc = msg.get('Cc').split(',')
+                        msg.replace_header('Cc', ','.join(set(c_cc).union(s_cc)))
+                    else:
+                        msg.add_header('Cc', ','.join(s_cc))
+                    open(x, 'w').write(msg.as_string().decode(ENCODING))
+
             if inspect_emails:
                 selected_patches = inspect_menu(tmpdir, to, cc, patches, suppress_cc,
                                                 options.in_reply_to, topic,
