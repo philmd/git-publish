@@ -1,3 +1,13 @@
+git-publish (1.5.1.1) UNRELEASED; urgency=medium
+
+  * Non-maintainer upload.
+  * Update to git-publish 1.5.1:
+    - few bugfixes
+    - added more options
+    - use Python3
+
+ -- Philippe Mathieu-Daudé <f4bug@amsat.org>  Fri, 06 Dec 2019 15:53:10 +0100
+
 git-publish (1.4.2-1) unstable; urgency=low
 
   * Initial release. (Closes: #889847)
